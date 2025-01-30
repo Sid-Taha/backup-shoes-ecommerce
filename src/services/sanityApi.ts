@@ -1,3 +1,4 @@
+// src\services\sanityApi.ts
 "use server"
 
 import { client } from "@/sanity/lib/client"
@@ -15,6 +16,7 @@ export interface ICard {
   price: number;
 }
 
+//-----------------------------------------------product Fetch Sanity
 export async function sanityFetch(query: string) {
   const res: ICard[] =  await client.fetch(`${query}{
           'image': image.asset->url,
@@ -31,7 +33,7 @@ export async function sanityFetch(query: string) {
   return res;
 }
 
-
+//-----------------------------------------------product-Image-Asset-Id
 
 async function uploadImageToSanity(imageUrl: string) {
   try {
@@ -73,6 +75,7 @@ export interface IReturnSanityProduct {
 }
 
 
+//-----------------------------------------------product Update Sanity
 export async function productPostSanity(updatedProduct: ICard) {
   
   const imageAsset = await uploadImageToSanity(updatedProduct.image)
@@ -101,9 +104,7 @@ export async function productPostSanity(updatedProduct: ICard) {
 
 
 
-
-
-
+//-----------------------------------------------product Delete Sanity
 export async function productDeleteSanity(updatedProduct: ICard) {
     
   const res = await client.delete(updatedProduct._id);
@@ -114,29 +115,29 @@ export async function productDeleteSanity(updatedProduct: ICard) {
 
 
 
-
-
+//-----------------------------------------------product Create Sanity
 export async function productCreateSanity(updatedProduct: ICard) {
-  
+  try {
+    const res = await client.create({
+      _type: "product",
+      productName: updatedProduct.productName,
+      price: updatedProduct.price,
+      category: updatedProduct.category,
+      inventory: updatedProduct.inventory,
+      description: updatedProduct.description,
+      status: "active",
+      colors: [],
+    });
 
-  const res = await client.create({
-  _type: "product",
-    // image: {
-    //   _type: 'image',
-    //   asset: {
-    //     _type: 'reference',
-    //     _ref: imageAsset._id,
-    //   },
-    // },
-    productName: updatedProduct.productName,
-    price: updatedProduct.price,
-    category: updatedProduct.category,
-    inventory: updatedProduct.inventory,
-    description: updatedProduct.description,
-  });
-
-
-  console.log("😁 ban gaya bhai.");
-  
-  
+    console.log("✅ Product created successfully:", res._id);
+    return res;
+  } catch (error) {
+    console.error("😡 Product creation failed:", error);
+    throw error;
+  }
 }
+
+
+
+
+

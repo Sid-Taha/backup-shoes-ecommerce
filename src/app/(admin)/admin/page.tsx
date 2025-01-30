@@ -1,18 +1,18 @@
-// src/app/(admin)/admin/page.tsx
+// src/app/(admin)/statistics/page.tsx
 "use client";
-import  ProductsGrid  from "@/components/productGrid";
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import StatisticsCharts from "@/components/statistics-charts";
 
-export default function AdminPage() {
+
+export default function StatisticsPage() {
   const { isLoaded, user } = useUser();
   const router = useRouter();
+  
   useEffect(() => {
     if (isLoaded) {
-      // Type assertion for publicMetadata
       const role = (user?.publicMetadata as { role?: string })?.role;
-      
       if (!user || role !== 'admin') {
         router.push('/');
       }
@@ -20,8 +20,8 @@ export default function AdminPage() {
   }, [isLoaded, user, router]);
 
   if (!isLoaded) {
-    return <div>Loading...</div>; // Add loading state
+    return <div>Loading...</div>;
   }
 
-  return <ProductsGrid />;
+  return <StatisticsCharts />;
 }

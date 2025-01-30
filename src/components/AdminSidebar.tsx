@@ -16,9 +16,15 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 const sidebarLinks = [
   {
+    title: "Dashboard",
+    icon: BarChart,
+    href: "/admin",
+    variant: "ghost" as const,
+  },
+  {
     title: "Products",
     icon: Package,
-    href: "/admin",
+    href: "/product-data",
     variant: "ghost" as const,
   },
   {
@@ -34,28 +40,10 @@ const sidebarLinks = [
     variant: "ghost" as const,
   },
   {
-    title: "Statistics",
-    icon: BarChart,
-    href: "/statistics",
-    variant: "ghost" as const,
-  },
-  {
-    title: "Reviews",
-    icon: MessageSquare,
-    href: "/reviews",
-    variant: "ghost" as const,
-  },
-  {
-    title: "Transactions",
-    icon: Globe,
-    href: "/transactions",
-    variant: "ghost" as const,
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    href: "/settings",
-    variant: "ghost" as const,
+  title: "Reviews",
+  icon: MessageSquare,
+  href: "/reviews",
+  variant: "ghost" as const,
   },
 ]
 

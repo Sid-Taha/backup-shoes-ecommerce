@@ -1,3 +1,4 @@
+// src\components\create-product-dialog.tsx
 "use client";
 
 import { useState } from "react";
@@ -21,7 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ICard } from "@/services/sanityApi";
+import {  ICard } from "@/services/sanityApi";
+import { useRef } from "react";
 
 interface EditProductDialogProps {
   product: ICard;
@@ -38,6 +40,9 @@ export function CreateProductDialog({
   onSave,
   categoryDropdown,
 }: EditProductDialogProps) {
+
+
+  //--------------------------------------------------States
   const [product, setProduct] = useState<ICard>(initialProduct);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -66,18 +71,8 @@ export function CreateProductDialog({
         </DialogHeader>
         <div className="grid gap-6 py-4">
           <div className="flex items-center gap-4">
-            <div className="relative aspect-square w-40 overflow-hidden rounded-lg border">
-              <Image
-                src={"/home/card1.png"}
-                alt={"product.productName"}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <Button variant="outline" className="h-20 w-40">
-              <ImagePlus className="mr-2 size-4" />
-              Change Image
-            </Button>
+            
+           
           </div>
           <div className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">

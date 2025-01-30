@@ -1,3 +1,4 @@
+// src\components\productGrid.tsx
 "use client"
 
 import { useEffect, useState } from "react"
@@ -20,7 +21,7 @@ export default function ProductsGrid() {
   
   const [isChange, setIsChange] = useState<boolean>(false)
   
-  
+  //-----------------------------------------------Edit-Card-function
   const handleSaveProduct = async (updatedProduct: ICard) => {
     const res = await productPostSanity(updatedProduct)
    if(res){
@@ -28,6 +29,7 @@ export default function ProductsGrid() {
    }
   }
  
+  //-----------------------------------------------Delete-Card-function
   const handleDeleteProduct = async (updatedProduct: ICard) => {
     const res = await productDeleteSanity(updatedProduct)
     if(res){
@@ -35,31 +37,30 @@ export default function ProductsGrid() {
      }
   }
   
-  const [createProduct, setCreateProduct] = useState<ICard | null>({
-    _id: '',
-    productName: '',
-    price: 0,
-    inventory: 0,
-    category: '',
-    description: '',
-    image: '',
-    colors: '',
-    status: ''
-  })
+  //-----------------------------------------------Create-Card-function
+
+  const [createProduct, setCreateProduct] = useState<ICard | null>()
   const handleCreateProduct = async (updatedProduct: ICard) => {
-    const res = await productCreateSanity(updatedProduct)
-    // if(res){
-    //   setIsChange(!isChange)
-    //  }
+    try {
+      const res = await productCreateSanity(updatedProduct);
+      if (res) {
+        setIsChange(!isChange);
+        setCreateProduct(null);
+      }
+    } catch (error) {
+      console.error("Creation failed:", error);
+    }
   }
+
+    //----------------------------------------------- States
 
   const [productArray, setProductsArray] = useState<ICard[]>([])
   const [showProductArray, setShowProductArray] = useState<ICard[]>([])
   const [search, setSearch] = useState<string>()
-  const [categorySelectedValue, setCategorySelectedValue] = useState<string>()
   const [categoryDropdown, setCategoryDropdown] = useState<string[]>([])
-  const [priceDropdown, setPriceDropdown] = useState<string[]>([])
 
+
+  //----------------------------------------------- UseEffect
   useEffect(()=>{
     async function getData() {
       let query = '*[_type == "product"]';
@@ -98,7 +99,7 @@ export default function ProductsGrid() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold">Products grid ({productArray.length})</h1>
+        <h1 className="text-3xl font-semibold">Products Grid ({productArray.length})</h1>
         <div className="flex items-center gap-4">
           <Button variant="outline">Export</Button>
           

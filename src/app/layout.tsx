@@ -109,7 +109,11 @@ export default function RootLayout({
   const isStudio = pathname.startsWith("/studio");
   const isHome = pathname.startsWith("/sign-in");
   const isAdmin = pathname.startsWith("/admin");
-  const studioAndHome = !isStudio && !isHome && !isAdmin;
+  const isOrders = pathname.startsWith("/orders");
+  const isCustomers = pathname.startsWith("/customers");
+  const isStatistics = pathname.startsWith("/product-data");
+  const isReviews = pathname.startsWith("/reviews");
+  const studioAndHome = !isStudio && !isHome && !isAdmin && !isOrders && !isCustomers && !isStatistics && !isReviews
 
   return (
     <ClerkProvider>
