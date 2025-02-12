@@ -47,7 +47,7 @@ function CheckoutForm({amount} : {amount: number}) {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:3000/PaymentSuccessPage?amount=2200`,
+        return_url: `${window.location.origin}/PaymentSuccessPage`,
       },
     });
 
