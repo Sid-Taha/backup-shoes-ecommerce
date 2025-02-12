@@ -5,14 +5,17 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 
 export default async function getUserInfo() {
   const { userId } = await auth();
+
   const user = await currentUser();
 
   if (!user) return null;
 
   return {
-    userId,
+    image: user?.imageUrl,
     name: `${user.firstName} ${user.lastName}`,
-    email: user.emailAddresses.find(e => e.id === user.primaryEmailAddressId)?.emailAddress,
+    email: user?.emailAddresses[0].emailAddress,
+    userId,
+    lastSignIn: user?.lastSignInAt
   };
 }
 
@@ -22,10 +25,12 @@ export async function userPostSanity(){
   const res = await client.createOrReplace({
     _type: "user",
     _id: `user-${user?.userId}`,
+    image: user?.image,
     name: user?.name,
-    userID: user?.userId,
     email: user?.email,
+    userID: user?.userId,
     address:"",
+    lastLogin: user?.lastSignIn
   })
   
   return (res.userID)

@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import StatisticsCharts from "@/components/statistics-charts";
 
-
 export default function StatisticsPage() {
   const { isLoaded, user } = useUser();
   const router = useRouter();

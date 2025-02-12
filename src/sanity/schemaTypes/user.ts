@@ -4,9 +4,9 @@ export const userSchema = {
   title: 'User',
   fields: [
     {
-      name: 'userID',
-      type: 'string',
-      title: 'User ID',
+      name: 'image',
+      type: 'url',
+      title: 'Image URL',
     },
     {
       name: 'name',
@@ -14,24 +14,35 @@ export const userSchema = {
       title: 'Name',
     },
     {
+      name: 'address',
+      type: 'string',
+      title: 'Address',
+    },
+    {
       name: 'email',
       type: 'string',
       title: 'Email',
     },
+    {
+      name: 'userID',
+      type: 'string',
+      title: 'User ID',
+    },
+    
     {
       name: 'password',
       type: 'string',
       title: 'Password',
     },
     {
-      name: 'address',
-      type: 'string',
-      title: 'Address',
-    },
-    {
       name: 'phone',
       type: 'string',
       title: 'Phone Number',
+    },
+    {
+      name: 'lastLogin',
+      type: 'number',
+      title: 'Last Log-In',
     },
   ],
 };

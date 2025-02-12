@@ -1,3 +1,4 @@
+//src\app\checkout\page.tsx
 "use client";
 import * as React from "react";
 import { Card } from "@/components/ui/card";
@@ -9,6 +10,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { postReq } from "@/services/shipmentApi";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface ICart {
   name: string;
@@ -18,12 +20,15 @@ interface ICart {
 }
 
 export default function CheckoutForm() {
+
+  const route = useRouter()
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+  const [clientSecret , setClientSecret] = useState()
 
   const [postalCode, setPostalCode] = useState("");
   const [locality, setLocality] = useState("");
@@ -33,6 +38,14 @@ export default function CheckoutForm() {
   const [shipCost] = useState(0);
 
   const [shipDetail, setShipDetail] = useState(false);
+
+  const totalAmount =
+    Number(
+      cartItem.reduce(
+        (acc: number, item: ICart) => acc + Number(item.price * item.quantity),
+        0
+      )
+    ) + Number(shipCost ? shipCost : 0);
 
   useEffect(() => {
     const data = localStorage.getItem("cart");
@@ -52,21 +65,16 @@ export default function CheckoutForm() {
   }, []);
 
   function handlePayment() {
+
     if (shipDetail) {
-      toast.success('payment successful ✅', {
-        className: 'text-lg',
-        style: { fontSize: '18px' },
-      });
+      route.push(`/payment?amount=${totalAmount}`)
       setShipDetail(false)
-      localStorage.setItem("cart", JSON.stringify([]));
-      setCartItem([]);
     } else {
       toast.warning('Invalid Shipping Detail ⚠️', {
         className: 'text-lg',
         style: { fontSize: '18px' },
       });
     }
-    
   }
 
 
@@ -93,13 +101,6 @@ export default function CheckoutForm() {
     }
   };
 
-  const totalAmount =
-    Number(
-      cartItem.reduce(
-        (acc: number, item: ICart) => acc + Number(item.price * item.quantity),
-        0
-      )
-    ) + Number(shipCost ? shipCost : 0);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 mt-[99px]">
